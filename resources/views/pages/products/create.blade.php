@@ -50,6 +50,19 @@
                                 @enderror
                             </div>
                             <div class="form-group">
+                                <label>Description</label>
+                                <input type="text"
+                                    class="form-control @error('description')
+                                is-invalid
+                            @enderror"
+                                    name="description">
+                                @error('description')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>Price</label>
                                 <input type="number"
                                     class="form-control @error('price')
@@ -78,21 +91,14 @@
 
                             <div class="form-group">
                                 <label class="form-label">Category</label>
-                                <div class="selectgroup w-100">
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="food" class="selectgroup-input"
-                                            checked="">
-                                        <span class="selectgroup-button">Food</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="drink" class="selectgroup-input">
-                                        <span class="selectgroup-button">Drink</span>
-                                    </label>
-                                    <label class="selectgroup-item">
-                                        <input type="radio" name="category" value="snack" class="selectgroup-input">
-                                        <span class="selectgroup-button">Snack</span>
-                                    </label>
-                                </div>
+                                <select class="form-control selectric @error('category_id') is-invalid @enderror"
+                                    name="category_id">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->name }}</option>
+                                    @endforeach
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label>Photo Product</label>

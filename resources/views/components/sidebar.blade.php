@@ -1,10 +1,10 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="index.html">POS DHANI</a>
+            <a href="index.html">ONLINE SHOP DHANI</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
-            <a href="index.html">Pd</a>
+            <a href="index.html">OLs</a>
         </div>
         <ul class="sidebar-menu">
             <li class="menu-header">Dashboard</li>
@@ -23,6 +23,16 @@
                 <ul class="dropdown-menu">
                     <li class="{{ Request::is('user') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ url('user') }}">All User</a>
+                    </li>
+                </ul>
+            </li>
+            <li class="menu-header">Category</li>
+            <li class="nav-item dropdown {{ $type_menu === 'category' ? 'active' : '' }}">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="far fa-user"></i>
+                    <span>Category</span></a>
+                <ul class="dropdown-menu">
+                    <li class="{{ Request::is('category') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ url('category') }}">All Category</a>
                     </li>
                 </ul>
             </li>

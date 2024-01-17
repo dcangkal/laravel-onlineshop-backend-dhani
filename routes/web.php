@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UserController;
@@ -27,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
         return view('pages.dashboard', ['type_menu' => 'dashboard']);
     })->name('home');
     Route::resource('user', UserController::class);
+    Route::resource('category', CategoryController::class);
     Route::resource('product', ProductController::class);
     Route::resource('order', OrderController::class);
 });

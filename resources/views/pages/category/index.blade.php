@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Users')
+@section('title', 'Categories')
 
 @push('style')
     <!-- CSS Libraries -->
@@ -11,14 +11,14 @@
     <div class="main-content">
         <section class="section">
             <div class="section-header">
-                <h1>Users</h1>
+                <h1>Categories</h1>
                 <div class="section-header-button">
-                    <a href="{{ route('user.create') }}" class="btn btn-primary">Add New</a>
+                    <a href="{{ route('category.create') }}" class="btn btn-primary">Add New</a>
                 </div>
                 <div class="section-header-breadcrumb">
                     <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
-                    <div class="breadcrumb-item"><a href="#">Users</a></div>
-                    <div class="breadcrumb-item">All Users</div>
+                    <div class="breadcrumb-item"><a href="#">Categories</a></div>
+                    <div class="breadcrumb-item">All Categories</div>
                 </div>
             </div>
             <div class="section-body">
@@ -27,9 +27,9 @@
                         @include('layouts.alert')
                     </div>
                 </div>
-                <h2 class="section-title">Posts</h2>
+                <h2 class="section-title">Category Product</h2>
                 <p class="section-lead">
-                    You can manage all posts, such as editing, deleting and more.
+                    You can manage all Categories, such as editing, deleting and more.
                 </p>
 
 
@@ -37,7 +37,7 @@
                     <div class="col-12">
                         <div class="card">
                             <div class="card-header">
-                                <h4>All Posts</h4>
+                                <h4>All Categories</h4>
                             </div>
                             <div class="card-body">
                                 <div class="float-left">
@@ -49,7 +49,7 @@
                                     </select>
                                 </div>
                                 <div class="float-right">
-                                    <form method="GET" action="{{ route('user.index') }}">
+                                    <form method="GET" action="{{ route('category.index') }}">
                                         <div class="input-group">
                                             <input type="text" class="form-control" placeholder="Search" name="name">
                                             <div class="input-group-append">
@@ -64,28 +64,35 @@
                                 <div class="table-responsive">
                                     <table class="table-striped table">
                                         <tr>
+
                                             <th>Name</th>
-                                            <th>Email</th>
-                                            <th>Phone</th>
-                                            <th>Roles</th>
+                                            <th>Image</th>
                                             <th>Created At</th>
                                             <th>Action</th>
                                         </tr>
-                                        @foreach ($users as $user)
+                                        @foreach ($categories as $category)
                                             <tr>
-                                                <td>{{ $user->name }}</td>
-                                                <td>{{ $user->email }}</td>
-                                                <td>{{ $user->phone }}</td>
-                                                <td>{{ $user->roles }}</td>
-                                                <td>{{ $user->created_at }}</td>
+
+                                                <td>{{ $category->name }}</td>
+                                                <td>
+                                                    @if ($category->image)
+                                                        <img src="{{ asset('storage/categories/' . $category->image) }}"
+                                                            alt="" width="100px" class="img-thumbnail">
+                                                    @else
+                                                        <span class="badge badge-danger">No Image</span>
+                                                    @endif
+                                                </td>
+                                                <td>{{ $category->created_at }}</td>
                                                 <td>
                                                     <div class="d-flex justify-content-center">
-                                                        <a href="{{ route('user.edit', $user->id) }}"
+                                                        <a href='{{ route('category.edit', $category->id) }}'
                                                             class="btn btn-sm btn-info btn-icon">
-                                                            <i class="fas fa-edit"></i> Edit
+                                                            <i class="fas fa-edit"></i>
+                                                            Edit
                                                         </a>
-                                                        <form action="{{ route('user.destroy', $user->id) }}" method="POST"
-                                                            class="ml-2">
+
+                                                        <form action="{{ route('category.destroy', $category->id) }}"
+                                                            method="POST" class="ml-2">
                                                             <input type="hidden" name="_method" value="DELETE">
                                                             <input type="hidden" name="_token"
                                                                 value="{{ csrf_token() }}">
@@ -99,10 +106,11 @@
                                             </tr>
                                         @endforeach
 
+
                                     </table>
                                 </div>
                                 <div class="float-right">
-                                    {{ $users->withQueryString()->links() }}
+                                    {{ $categories->withQueryString()->links() }}
                                 </div>
                             </div>
                         </div>
