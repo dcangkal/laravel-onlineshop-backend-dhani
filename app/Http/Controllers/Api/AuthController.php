@@ -9,6 +9,23 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
+    public function register(Request $request)
+    {
+        $validated = $request->validate([
+            'name' => 'required|max:100',
+            'email' => 'required|unique:users|max:100',
+            'password' => 'required',
+            'phone' => 'required',
+            'roles' => 'required',
+        ]);
+        $validated['password'] = Hash::make($validated['password']);
+        $user = User::create($validated);
+        $token = $user->createToken('auth_token')->plainTextToken;
+        return response()->json([
+            'access_token' => $token,
+            'user' => $user,
+        ], 201);
+    }
 
     public function login(Request $request)
     {
@@ -16,7 +33,6 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
         $user = User::where('email', $loginData['email'])->first();
         if (!$user) {
             return response([
@@ -28,7 +44,6 @@ class AuthController extends Controller
                 'message' => 'password salah',
             ], 401);
         }
-
         $token = $user->createToken('auth_token')->plainTextToken;
         return response([
             'user' => $user,

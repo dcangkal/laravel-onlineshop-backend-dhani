@@ -11,13 +11,13 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //all products
-        $products = Product::orderBy('id', 'desc')->get();
+        $products = Product::when($request->category_id, function ($query) use ($request) {
+            return $query->where('category_id', $request->category_id);
+        })->paginate(10);
         return response()->json([
-            'success' => true,
-            'message' => 'List Data Product',
+            'message' => 'success',
             'data' => $products
         ], 200);
     }
